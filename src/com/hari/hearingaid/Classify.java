@@ -114,6 +114,9 @@ public class Classify extends Activity {
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 				dummy = i;
+				//Reducing the noise
+				if (toTransform[0][i]<10)
+					toTransform[0][i]=0;
 				if (toTransform[0][dummy] > 30) {
 
 					if (toTransform[0][i] > max) {
