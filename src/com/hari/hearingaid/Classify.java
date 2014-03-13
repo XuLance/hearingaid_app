@@ -31,6 +31,10 @@ public class Classify extends Activity {
 	Bitmap bitmap;
 	Canvas canvas;
 	Paint paint;
+	int count1=0,count2=0,count3=0; //Counts for classifying sounds
+	//Count1 for Police Siren
+	//Count2 for Car Horn
+	//COunt3 for Fire Alarm
 	int dummy = 0;
 	double max;
 

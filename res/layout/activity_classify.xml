@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffff"
+    android:background="#000000"
     android:orientation="vertical" >
 
     <TextView
@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello_world"
-        android:textColor="#000000" />
+        android:textColor="#ffffff" />
 
     <ImageView
         android:id="@+id/ImageView01"
