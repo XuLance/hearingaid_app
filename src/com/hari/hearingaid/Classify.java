@@ -24,6 +24,7 @@ public class Classify extends Activity {
 	int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 	private RealDoubleFFT transformer;
 	int blockSize = 512;
+	boolean police = false, fire = false, carhorn = false;
 	public AudioRecord audioRecord;
 	boolean started = false;
 	RecordAudio recordTask;
@@ -31,10 +32,10 @@ public class Classify extends Activity {
 	Bitmap bitmap;
 	Canvas canvas;
 	Paint paint;
-	int count1=0,count2=0,count3=0; //Counts for classifying sounds
-	//Count1 for Police Siren
-	//Count2 for Car Horn
-	//COunt3 for Fire Alarm
+	int count1 = 0, count2 = 0, count3 = 0; // Counts for classifying sounds
+	// Count1 for Police Siren
+	// Count2 for Car Horn
+	// COunt3 for Fire Alarm
 	int dummy = 0;
 	double max;
 
@@ -115,23 +116,27 @@ public class Classify extends Activity {
 		protected void onProgressUpdate(double[]... toTransform) {
 
 			canvas.drawColor(Color.BLACK);
-			
+
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 
-				if (toTransform[0][i] > 30) {
+				if (toTransform[0][i] > 20) {
 					dummy = i;
 					if (toTransform[0][i] > toTransform[0][0])
 						max = toTransform[0][i];
-					//Check for Police Siren
+					// Check for Police Siren
 					// 57 => 900Hz and 78 => 1200Hz
-					if (i>=57 && i<=78) 
+					if (i >= 57 && i <= 78) {
+						police=true;
 						count1++;
-					//Check for Fire Alarm 
+						Log.d("This Message","Count1 : "+count1);
+					}
+					// Check for Fire Alarm
 					// 225 => 3500Hz and 237 => 3700Hz
-					else if  (i>=225 && i<=237) 
-					{
+					else if (i >= 225 && i <= 237) {
+						fire=true;
 						count3++;
+						Log.d("This Message","Count3 : "+count3);
 					}
 				}
 
@@ -140,6 +145,7 @@ public class Classify extends Activity {
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
+			
 			tv.setText("Peak Frequency : " + ((double) (dummy)) / 512 * 8000
 					+ " Hz" + "    Magnitude : " + max);
 			imageView.invalidate();
