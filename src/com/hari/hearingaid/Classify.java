@@ -123,6 +123,16 @@ public class Classify extends Activity {
 					dummy = i;
 					if (toTransform[0][i] > toTransform[0][0])
 						max = toTransform[0][i];
+					//Check for Police Siren
+					// 57 => 900Hz and 78 => 1200Hz
+					if (i>=57 && i<=78) 
+						count1++;
+					//Check for Fire Alarm 
+					// 225 => 3500Hz and 237 => 3700Hz
+					else if  (i>=225 && i<=237) 
+					{
+						count3++;
+					}
 				}
 
 				int downy = (int) (200 - (toTransform[0][i] * 10));
