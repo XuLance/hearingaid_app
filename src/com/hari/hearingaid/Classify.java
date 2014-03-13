@@ -18,7 +18,7 @@ import ca.uol.aig.fftpack.RealDoubleFFT;
 
 public class Classify extends Activity {
 
-	int frequency = 16000;
+	int frequency = 8000;
 	@SuppressWarnings("deprecation")
 	int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
 	int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
@@ -31,6 +31,7 @@ public class Classify extends Activity {
 	Bitmap bitmap;
 	Canvas canvas;
 	Paint paint;
+	int dummy=0;
 
 	// AudioRecord audioRecord;
 
@@ -46,7 +47,7 @@ public class Classify extends Activity {
 		transformer = new RealDoubleFFT(blockSize);
 
 		imageView = (ImageView) this.findViewById(R.id.ImageView01);
-		bitmap = Bitmap.createBitmap((int) 512, (int) 200,
+		bitmap = Bitmap.createBitmap((int) 512, (int) 100,
 				Bitmap.Config.ARGB_8888);
 		canvas = new Canvas(bitmap);
 		paint = new Paint();
@@ -55,8 +56,8 @@ public class Classify extends Activity {
 
 	}
 
-	public void onPause() {
-		super.onPause();
+	public void onStop() {
+		super.onStop();
 		started = false;
 		recordTask.cancel(true);
 		audioRecord.release();
@@ -110,26 +111,25 @@ public class Classify extends Activity {
 
 			canvas.drawColor(Color.BLACK);
 			double max = toTransform[0][0];
-			int dummy=0;
+			
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
-				//Reducing the noise
-				if (toTransform[0][i]<10)
-					toTransform[0][i]=0;
-				if (toTransform[0][i] > 30) {
+				
+				if (toTransform[0][i] > 10) {
 					dummy = i;
+				}	
 					if (toTransform[0][i] > max) {
 						max = toTransform[0][i];
 						Log.d("Max", "" + dummy);
 						
 					}
-				}
-				int downy = (int) (200 - (toTransform[0][i] * 10));
-				int upy = 200;
+				
+				int downy = (int) (100 - (toTransform[0][i] * 10));
+				int upy = 100;
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			tv.setText("Peak Frequency : " + ((double) (dummy)) / 512 * 8000 + " Hz"
+			tv.setText("Peak Frequency : " + ((double) (dummy)) / 512 * 4000 + " Hz"
 					+ "    Magnitude : " + max);
 			imageView.invalidate();
 		}
