@@ -2,24 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/tv1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:text="@string/hello_world" /> 
+        android:text="@string/hello_world"
+        android:textColor="#000000" />
 
     <ImageView
-        android:contentDescription="@string/hello_world"
         android:id="@+id/ImageView01"
-        android:layout_gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="200dip" >
-    </ImageView>
+        android:layout_height="250dip"
+        android:layout_gravity="top"
+        android:contentDescription="@string/hello_world" />
 
-    
+    <ImageView
+        android:id="@+id/ImageView02"
+        android:layout_width="match_parent"
+        android:layout_height="27dip"
+        android:layout_gravity="top"
+        android:background="@drawable/scale"
+        android:contentDescription="@string/hello_world" >
+    </ImageView>
 
 </LinearLayout>
