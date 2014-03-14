@@ -1,6 +1,7 @@
 package com.hari.hearingaid;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
-public class Classify extends Activity {
+public class Train extends Activity {
 
 	int frequency = 16000;
 	@SuppressWarnings("deprecation")
@@ -24,10 +25,12 @@ public class Classify extends Activity {
 	int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 	private RealDoubleFFT transformer;
 	int blockSize = 512;
-	boolean police = false, fire = false, carhorn = false;
+	boolean train = false;
 	public AudioRecord audioRecord;
 	boolean started = false;
 	RecordAudio recordTask;
+	SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+	double[] list = new double[blockSize];
 	ImageView imageView;
 	Bitmap bitmap;
 	Canvas canvas;
@@ -72,6 +75,7 @@ public class Classify extends Activity {
 	public class RecordAudio extends AsyncTask<Void, double[], Void> {
 		TextView tv = (TextView) findViewById(R.id.tv1);
 		TextView tv1 = (TextView) findViewById(R.id.tv2);
+
 		@Override
 		protected Void doInBackground(Void... arg0) {
 
@@ -121,35 +125,24 @@ public class Classify extends Activity {
 				int x = i;
 
 				if (toTransform[0][i] > 30) {
-					dummy = i;
-					if (toTransform[0][i] > toTransform[0][0])
-						max = toTransform[0][i];
-					// Check for Police Siren
-					// 57 => 900Hz and 78 => 1200Hz
-					if (i >= 57 && i <= 78) {
-						police=true;
-						count1++;
-						Log.d("This Message","Count1 : "+count1);
-					}
-					// Check for Fire Alarm
-					// 225 => 3500Hz and 237 => 3700Hz
-					else if (i >= 225 && i <= 237) {
-						fire=true;
-						count3++;
-						Log.d("This Message","Count3 : "+count3);
-					}
+					dummy++;
 				}
+				tv.setText("Dummy : "+dummy);
 
 				int downy = (int) (200 - (toTransform[0][i] * 10));
 				int upy = 200;
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			
-			tv.setText("Peak Frequency : " + ((double) (dummy)) / 512 * 8000
-					+ " Hz" + "    Magnitude : " + max + "Count 1,2,3 : "+count1+","+count2+","+count3);
-			if (count3>30)
-				tv1.setText("Fire Alarm Detected");
+			if (dummy>10 && train==false)
+			{
+				train=true;
+				for (int i=0;i < toTransform[0].length; i++)
+				{
+					list[i]=toTransform[0][i];
+				}
+			}
+
 			imageView.invalidate();
 		}
 

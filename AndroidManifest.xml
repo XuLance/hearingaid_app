@@ -43,6 +43,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hari.hearingaid.MainActivity" />
         </activity>
+        <activity
+            android:name="com.hari.hearingaid.Train"
+            android:label="@string/title_activity_classify"
+            android:parentActivityName="com.hari.hearingaid.MainActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hari.hearingaid.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

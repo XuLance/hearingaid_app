@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		// listview.text
 		// Items on the list
-		String[] values = new String[] { "Talk & Listen", "Classification using Visualizer", "Vibrator Alarm" };
+		String[] values = new String[] { "Talk & Listen", "Classification using Visualizer", "Train" };
 
 		final ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < values.length; ++i) {
@@ -46,6 +46,10 @@ public class MainActivity extends Activity {
 				{
 					classify(getCurrentFocus());
 				}
+				else if (position == 2)
+				{
+					train(getCurrentFocus());
+				}
 			}
 
 		});
@@ -58,6 +62,11 @@ public class MainActivity extends Activity {
 
 	public void classify(View view) {
 		Intent intent = new Intent(this, Classify.class);
+		startActivity(intent);
+	}
+	
+	public void train(View view) {
+		Intent intent = new Intent(this, Train.class);
 		startActivity(intent);
 	}
 	
