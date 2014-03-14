@@ -75,6 +75,7 @@ public class Train extends Activity {
 	public class RecordAudio extends AsyncTask<Void, double[], Void> {
 		TextView tv = (TextView) findViewById(R.id.tv1);
 		TextView tv1 = (TextView) findViewById(R.id.tv2);
+		int counter = 0;
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
@@ -125,7 +126,7 @@ public class Train extends Activity {
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 
-				if (toTransform[0][i] > 30 && (!train)) {
+				if (toTransform[0][i] > 25 && (!train)) {
 					dummy++;
 				}
 
@@ -134,26 +135,28 @@ public class Train extends Activity {
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			tv.setText("Peaks greater than magnitude 30 : " + dummy);
+			tv.setText("Peaks greater than magnitude 30 : " + dummy + " Counter : "+counter);
 			if (dummy >= 2 && train == false) {
-				train = true;
+				counter++;
+				if (counter > 5)
+					train = true;
 				for (int i = 0; i < toTransform[0].length; i++) {
-					if (toTransform[0][i] > 1)
-						list[i] = 1;
-					else
-						list[i] = 0;
+					if (toTransform[0][i] > 3) {
+						if (list[i] == 0)
+							list[i] = 1;
+
+					}
 				}
 				StringBuilder str = new StringBuilder();
 				for (int i = 0; i < list.length; i++) {
-				    str.append(list[i]).append(",");
+					str.append(list[i]).append(",");
 				}
 				prefs.edit().putString("string", str.toString());
-				Log.d("Shared Preferences",""+str);
+				Log.d("Shared Preferences", "" + str);
 			}
 
 			imageView.invalidate();
 		}
-
 	}
 
 	@Override
