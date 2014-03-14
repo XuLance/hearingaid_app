@@ -8,6 +8,7 @@
     <string name="write">Write Text</string>
     <string name="title_activity_tts__stt">Talk and Listen</string>
     <string name="title_activity_classify">Classify</string>
+    <string name="title_activity_train">Train</string>
+    <string name="title_activity_compare">Compare</string>
     <string name="hello_world">Start</string>
-
 </resources>

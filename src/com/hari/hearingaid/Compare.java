@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
-public class Train extends Activity {
+public class Compare extends Activity {
 
 	int frequency = 16000;
 	@SuppressWarnings("deprecation")

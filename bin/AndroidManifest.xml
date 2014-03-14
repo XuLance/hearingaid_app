@@ -35,6 +35,14 @@
                 android:value="com.hari.hearingaid.MainActivity" />
         </activity>
         <activity
+            android:name="com.hari.hearingaid.Compare"
+            android:label="@string/title_activity_tts__stt"
+            android:parentActivityName="com.hari.hearingaid.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hari.hearingaid.MainActivity" />
+        </activity>
+        <activity
             android:name="com.hari.hearingaid.Classify"
             android:label="@string/title_activity_classify"
             android:parentActivityName="com.hari.hearingaid.MainActivity"
