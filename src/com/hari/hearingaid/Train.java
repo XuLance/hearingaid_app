@@ -29,7 +29,7 @@ public class Train extends Activity {
 	public AudioRecord audioRecord;
 	boolean started = false;
 	RecordAudio recordTask;
-	SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+	public SharedPreferences prefs;
 	double[] list = new double[blockSize];
 	ImageView imageView;
 	Bitmap bitmap;
@@ -47,8 +47,8 @@ public class Train extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_classify);
-
+		setContentView(R.layout.activity_train);
+		prefs = getPreferences(MODE_PRIVATE);
 		started = true;
 		recordTask = new RecordAudio();
 		recordTask.execute();
@@ -120,26 +120,28 @@ public class Train extends Activity {
 		protected void onProgressUpdate(double[]... toTransform) {
 
 			canvas.drawColor(Color.BLACK);
-
+			if (!train)
+				dummy = 0;
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 
-				if (toTransform[0][i] > 30) {
+				if (toTransform[0][i] > 30 && (!train)) {
 					dummy++;
 				}
-				tv.setText("Dummy : "+dummy);
 
 				int downy = (int) (200 - (toTransform[0][i] * 10));
 				int upy = 200;
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			if (dummy>10 && train==false)
-			{
-				train=true;
-				for (int i=0;i < toTransform[0].length; i++)
-				{
-					list[i]=toTransform[0][i];
+			tv.setText("Peaks greater than magnitude 30 : " + dummy);
+			if (dummy > 2 && train == false) {
+				train = true;
+				for (int i = 0; i < toTransform[0].length; i++) {
+					if (toTransform[0][i] > 15)
+						list[i] = 1;
+					else
+						list[i] = 0;
 				}
 			}
 
