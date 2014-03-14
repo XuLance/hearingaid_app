@@ -23,7 +23,8 @@ public class MainActivity extends Activity {
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		// listview.text
 		// Items on the list
-		String[] values = new String[] { "Talk & Listen", "Classification using Visualizer", "Train" };
+		String[] values = new String[] { "Talk & Listen",
+				"Classification using Visualizer", "Train", "Compare" };
 
 		final ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < values.length; ++i) {
@@ -41,35 +42,41 @@ public class MainActivity extends Activity {
 				if (position == 0) {
 					// Call the TTS activity when the first item is pressed
 					speakText(getCurrentFocus());
-				}
-				else if (position==1)
-				{
+				} else if (position == 1) {
 					classify(getCurrentFocus());
-				}
-				else if (position == 2)
-				{
+				} else if (position == 2) {
 					train(getCurrentFocus());
+				} else if (position == 3) {
+					compare(getCurrentFocus());
 				}
 			}
 
 		});
 	}
 
+	// Function with a Speech-to-Text and Text-to-Speech interface
 	public void speakText(View view) {
 		Intent intent = new Intent(this, TTS_STT.class);
 		startActivity(intent);
 	}
 
+	// Trivial Classification where we know the frequency bands where the
 	public void classify(View view) {
 		Intent intent = new Intent(this, Classify.class);
 		startActivity(intent);
 	}
-	
+	// Train and store the frequency components
 	public void train(View view) {
 		Intent intent = new Intent(this, Train.class);
 		startActivity(intent);
 	}
 	
+	//Compare mic input with trained data
+	public void compare(View view) {
+		Intent intent = new Intent(this, Compare.class);
+		startActivity(intent);
+	}
+
 	private class StableArrayAdapter extends ArrayAdapter<String> {
 
 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
