@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000" >
+    android:background="#ffffff" >
 
     <TextView
         android:id="@+id/tv1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffff" />
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:textColor="#000000" />
 
     <ImageView
         android:id="@+id/ImageView01"
         android:layout_width="match_parent"
-        android:layout_height="250dip"
+        android:layout_height="142dip"
         android:layout_below="@id/tv1"
         android:contentDescription="@string/hello_world" />
 
@@ -28,9 +28,9 @@
 
     <TextView
         android:id="@+id/tv2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:textColor="#ff0000"
         android:textSize="25sp" />
 
