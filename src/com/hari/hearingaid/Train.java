@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ca.uol.aig.fftpack.RealDoubleFFT;
@@ -30,7 +31,7 @@ public class Train extends Activity {
 	boolean started = false;
 	RecordAudio recordTask;
 	public SharedPreferences prefs;
-	double[] list = new double[blockSize];
+	int[] list = new int[blockSize]; //Array to be stored in SharedPreferences
 	ImageView imageView;
 	Bitmap bitmap;
 	Canvas canvas;
@@ -75,6 +76,8 @@ public class Train extends Activity {
 	public class RecordAudio extends AsyncTask<Void, double[], Void> {
 		TextView tv = (TextView) findViewById(R.id.tv1);
 		TextView tv1 = (TextView) findViewById(R.id.tv2);
+		EditText et = (EditText) findViewById(R.id.et1);
+		String s= et.getText().toString();
 		int counter = 0;
 
 		@Override
@@ -135,7 +138,7 @@ public class Train extends Activity {
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			tv.setText("Peaks greater than magnitude 30 : " + dummy + " Counter : "+counter);
+			tv.setText("|Peaks| > 30 : " + dummy + " Counter : "+counter);
 			if (dummy >= 2 && train == false) {
 				counter++;
 				if (counter > 5)
@@ -151,7 +154,7 @@ public class Train extends Activity {
 				for (int i = 0; i < list.length; i++) {
 					str.append(list[i]).append(",");
 				}
-				prefs.edit().putString("string", str.toString());
+				prefs.edit().putString(s, str.toString());
 				Log.d("Shared Preferences", "" + str);
 			}
 

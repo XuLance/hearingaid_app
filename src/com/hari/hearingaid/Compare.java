@@ -1,5 +1,7 @@
 package com.hari.hearingaid;
 
+import java.util.StringTokenizer;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -30,7 +32,7 @@ public class Compare extends Activity {
 	boolean started = false;
 	RecordAudio recordTask;
 	public SharedPreferences prefs;
-	double[] list = new double[blockSize];
+	int[] list = new int[blockSize];
 	ImageView imageView;
 	Bitmap bitmap;
 	Canvas canvas;
@@ -52,9 +54,15 @@ public class Compare extends Activity {
 		started = true;
 		recordTask = new RecordAudio();
 		recordTask.execute();
+		// Retrieve the data stored in SharedPreferences
+		String savedString = prefs.getString("s", "");
+		StringTokenizer st = new StringTokenizer(savedString, ",");
+		for (int i = 0; i < 512; i++) {
+			list[i] = Integer.parseInt(st.nextToken());
+			Log.d("Integer List", "" + list[i]);
+		}
 
 		transformer = new RealDoubleFFT(blockSize);
-
 		imageView = (ImageView) this.findViewById(R.id.ImageView01);
 		bitmap = Bitmap.createBitmap((int) 512, (int) 200,
 				Bitmap.Config.ARGB_8888);
@@ -75,6 +83,7 @@ public class Compare extends Activity {
 	public class RecordAudio extends AsyncTask<Void, double[], Void> {
 		TextView tv = (TextView) findViewById(R.id.tv1);
 		TextView tv1 = (TextView) findViewById(R.id.tv2);
+		int[] comp = new int[blockSize];
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
@@ -120,36 +129,29 @@ public class Compare extends Activity {
 		protected void onProgressUpdate(double[]... toTransform) {
 
 			canvas.drawColor(Color.BLACK);
-			if (!train)
-				dummy = 0;
+
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 
-				if (toTransform[0][i] > 30 && (!train)) {
-					dummy++;
-				}
+				if (toTransform[0][i] > 3) {
+					comp[i] = 1;
+				} else
+					comp[i] = 0;
 
 				int downy = (int) (200 - (toTransform[0][i] * 10));
 				int upy = 200;
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			tv.setText("Peaks greater than magnitude 30 : " + dummy);
-			if (dummy >= 2 && train == false) {
-				train = true;
-				for (int i = 0; i < toTransform[0].length; i++) {
-					if (toTransform[0][i] > 1)
-						list[i] = 1;
-					else
-						list[i] = 0;
-				}
-				StringBuilder str = new StringBuilder();
-				for (int i = 0; i < list.length; i++) {
-				    str.append(list[i]).append(",");
-				}
-				prefs.edit().putString("string", str.toString());
-				Log.d("Shared Preferences",""+str);
+			//Calculate the distance between the stored array and incoming array
+			int distance = 0;
+			for (int i = 0; i < toTransform[0].length; i++) {
+				if (Math.abs(comp[i] - list[i]) == 1)
+					distance++;
+				else
+					distance=distance+0;
 			}
+			Log.d("Hamming Distance : ", ""+distance);
 
 			imageView.invalidate();
 		}

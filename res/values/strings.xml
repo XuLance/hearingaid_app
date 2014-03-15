@@ -11,4 +11,5 @@
     <string name="title_activity_train">Train</string>
     <string name="title_activity_compare">Compare</string>
     <string name="hello_world">Start</string>
+    <string name="key">Enter key : </string>
 </resources>
