@@ -138,7 +138,7 @@ public class Compare extends Activity {
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 
-				if (toTransform[0][i] > 3) {
+				if (toTransform[0][i] > 18) {
 					comp[i] = 1;
 				} else
 					comp[i] = 0;
