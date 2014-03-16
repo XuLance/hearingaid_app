@@ -1,6 +1,7 @@
 package com.hari.hearingaid;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -30,7 +31,10 @@ public class Train extends Activity {
 	public AudioRecord audioRecord;
 	boolean started = false;
 	RecordAudio recordTask;
-	public SharedPreferences prefs;
+	StringBuilder str;
+	boolean x=false;
+	public SharedPreferences.Editor prefs;
+	public SharedPreferences pref;
 	int[] list = new int[blockSize]; //Array to be stored in SharedPreferences
 	ImageView imageView;
 	Bitmap bitmap;
@@ -49,7 +53,9 @@ public class Train extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_train);
-		prefs = getPreferences(MODE_PRIVATE);
+		getApplicationContext();
+		prefs = Train.this.getSharedPreferences("com.hari.hearing",Context.MODE_PRIVATE).edit();
+		pref = Train.this.getPreferences(MODE_PRIVATE);
 		started = true;
 		recordTask = new RecordAudio();
 		recordTask.execute();
@@ -129,7 +135,7 @@ public class Train extends Activity {
 			for (int i = 0; i < toTransform[0].length; i++) {
 				int x = i;
 
-				if (toTransform[0][i] > 25 && (!train)) {
+				if (toTransform[0][i] > 18 && (!train)) {
 					dummy++;
 				}
 
@@ -147,17 +153,19 @@ public class Train extends Activity {
 					if (toTransform[0][i] > 3) {
 						if (list[i] == 0)
 							list[i] = 1;
-
+						Log.d("List : ",""+list[i]);
 					}
 				}
-				StringBuilder str = new StringBuilder();
+				str = new StringBuilder();
 				for (int i = 0; i < list.length; i++) {
 					str.append(list[i]).append(",");
 				}
-				prefs.edit().putString(s, str.toString());
-				Log.d("Shared Preferences", "" + str);
+				prefs.putString("s", str.toString());
+				prefs.apply();
+				String savedString = pref.getString("s", null);
+				Log.d("Saved String : ", "" + savedString);
 			}
-
+			
 			imageView.invalidate();
 		}
 	}

@@ -3,6 +3,7 @@ package com.hari.hearingaid;
 import java.util.StringTokenizer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -31,7 +32,7 @@ public class Compare extends Activity {
 	public AudioRecord audioRecord;
 	boolean started = false;
 	RecordAudio recordTask;
-	public SharedPreferences prefs;
+	public SharedPreferences pref;
 	int[] list = new int[blockSize];
 	ImageView imageView;
 	Bitmap bitmap;
@@ -50,18 +51,22 @@ public class Compare extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_train);
-		prefs = getPreferences(MODE_PRIVATE);
+		getApplicationContext();
+		pref = getSharedPreferences("com.hari.hearing",Context.MODE_PRIVATE);
 		started = true;
 		recordTask = new RecordAudio();
 		recordTask.execute();
 		// Retrieve the data stored in SharedPreferences
-		String savedString = prefs.getString("s", "");
-		StringTokenizer st = new StringTokenizer(savedString, ",");
-		for (int i = 0; i < 512; i++) {
-			list[i] = Integer.parseInt(st.nextToken());
-			Log.d("Integer List", "" + list[i]);
+		String savedString = pref.getString("s", null);
+		Log.d("", "Executed");
+		Log.d("Stored string ", savedString);
+		if (savedString != null) {
+			StringTokenizer st = new StringTokenizer(savedString, ",");
+			for (int i = 0; i < 512; i++) {
+				list[i] = Integer.parseInt(st.nextToken());
+				Log.d("Integer List", "" + list[i]);
+			}
 		}
-
 		transformer = new RealDoubleFFT(blockSize);
 		imageView = (ImageView) this.findViewById(R.id.ImageView01);
 		bitmap = Bitmap.createBitmap((int) 512, (int) 200,
@@ -143,15 +148,16 @@ public class Compare extends Activity {
 
 				canvas.drawLine(x, downy, x, upy, paint);
 			}
-			//Calculate the distance between the stored array and incoming array
+			// Calculate the distance between the stored array and incoming
+			// array
 			int distance = 0;
 			for (int i = 0; i < toTransform[0].length; i++) {
 				if (Math.abs(comp[i] - list[i]) == 1)
 					distance++;
 				else
-					distance=distance+0;
+					distance = distance + 0;
 			}
-			Log.d("Hamming Distance : ", ""+distance);
+			Log.d("Hamming Distance : ", "" + distance);
 
 			imageView.invalidate();
 		}
