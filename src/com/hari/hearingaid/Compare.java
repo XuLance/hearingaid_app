@@ -151,7 +151,7 @@ public class Compare extends Activity {
 			// array
 			int distance = 0;
 			for (int i = 0; i < toTransform[0].length; i++) {
-				if (Math.abs(comp[i] - list[i]) == 1)
+				if ((comp[i]-list[i]) == 1)
 					distance++;
 				else
 					distance = distance + 0;

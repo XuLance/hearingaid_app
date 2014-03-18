@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +26,7 @@ public class MainActivity extends Activity {
 		// listview.text
 		// Items on the list
 		String[] values = new String[] { "Talk & Listen",
-				"Classification", "Train", "Compare" };
+				"Classification", "Compare" };
 
 		final ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < values.length; ++i) {
@@ -44,9 +46,8 @@ public class MainActivity extends Activity {
 					speakText(getCurrentFocus());
 				} else if (position == 1) {
 					classify(getCurrentFocus());
-				} else if (position == 2) {
-					train(getCurrentFocus());
-				} else if (position == 3) {
+				} 
+				else if (position == 2) {
 					compare(getCurrentFocus());
 				}
 			}
@@ -63,11 +64,6 @@ public class MainActivity extends Activity {
 	// Trivial Classification where we know the frequency bands where the
 	public void classify(View view) {
 		Intent intent = new Intent(this, Classify.class);
-		startActivity(intent);
-	}
-	// Train and store the frequency components
-	public void train(View view) {
-		Intent intent = new Intent(this, Train.class);
 		startActivity(intent);
 	}
 	
@@ -88,7 +84,7 @@ public class MainActivity extends Activity {
 				mIdMap.put(objects.get(i), i);
 			}
 		}
-
+		
 		@Override
 		public long getItemId(int position) {
 			String item = getItem(position);
@@ -100,6 +96,23 @@ public class MainActivity extends Activity {
 			return true;
 		}
 
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.action_settings:
+	        	Intent intent = new Intent(this, Train.class);
+	    		startActivity(intent);
+	            return true;
+	        
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 }

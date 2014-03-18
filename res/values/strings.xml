@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Hearing Aid</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Train</string>
     <string name="text1">Text to Speech</string>
     <string name="text2">Speech to Text</string>
     <string name="write">Write Text</string>
