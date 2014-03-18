@@ -71,7 +71,9 @@ public class Classify extends Activity {
 
 	public class RecordAudio extends AsyncTask<Void, double[], Void> {
 		TextView tv = (TextView) findViewById(R.id.tv1);
-		TextView tv1 = (TextView) findViewById(R.id.tv2);
+		TextView tv1 = (TextView) findViewById(R.id.tv2); //TextView for Fire Alarm
+		TextView tv2 = (TextView) findViewById(R.id.tv3); //TextView for Police Siren
+		TextView tv3 = (TextView) findViewById(R.id.tv4); //TextView for Car Horn
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
@@ -151,12 +153,12 @@ public class Classify extends Activity {
 					+ " Hz" + "    Magnitude : " + max + "Count 1,2,3 : "
 					+ count1 + "," + count2 + "," + count3);
 			if (count3 > 20) {
-				tv1.setText("");
+				tv2.setText("");
 				tv1.setText("Fire Alarm Detected");
 			}
 			if (count1 > 30) {
 				tv1.setText("");
-				tv1.setText("Police Siren Detected");
+				tv2.setText("Police Siren Detected");
 			}
 			if (count2 > 30) {
 				tv1.setText("Car Horn Detected");
