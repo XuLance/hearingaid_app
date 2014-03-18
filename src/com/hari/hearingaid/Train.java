@@ -147,13 +147,12 @@ public class Train extends Activity {
 			tv.setText("|Peaks| > 30 : " + dummy + " Counter : "+counter);
 			if (dummy >= 2 && train == false) {
 				counter++;
-				if (counter > 5)
+				if (counter > 1)
 					train = true;
 				for (int i = 0; i < toTransform[0].length; i++) {
 					if (toTransform[0][i] > 3) {
 						if (list[i] == 0)
 							list[i] = 1;
-						Log.d("List : ",""+list[i]);
 					}
 				}
 				str = new StringBuilder();
@@ -162,8 +161,8 @@ public class Train extends Activity {
 				}
 				prefs.putString("s", str.toString());
 				prefs.apply();
-				String savedString = pref.getString("s", null);
-				Log.d("Saved String : ", "" + savedString);
+				/*String savedString = pref.getString("s", null);
+				Log.d("Saved String : ", "" + savedString);*/
 			}
 			
 			imageView.invalidate();

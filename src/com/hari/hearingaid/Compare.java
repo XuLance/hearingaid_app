@@ -52,7 +52,7 @@ public class Compare extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_train);
 		getApplicationContext();
-		pref = getSharedPreferences("com.hari.hearing",Context.MODE_PRIVATE);
+		pref = getSharedPreferences("com.hari.hearing", Context.MODE_PRIVATE);
 		started = true;
 		recordTask = new RecordAudio();
 		recordTask.execute();
@@ -64,7 +64,7 @@ public class Compare extends Activity {
 			StringTokenizer st = new StringTokenizer(savedString, ",");
 			for (int i = 0; i < 512; i++) {
 				list[i] = Integer.parseInt(st.nextToken());
-				Log.d("Integer List", "" + list[i]);
+
 			}
 		}
 		transformer = new RealDoubleFFT(blockSize);
@@ -132,7 +132,6 @@ public class Compare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(double[]... toTransform) {
-
 			canvas.drawColor(Color.BLACK);
 
 			for (int i = 0; i < toTransform[0].length; i++) {
