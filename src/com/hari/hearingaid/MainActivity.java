@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 		// listview.text
 		// Items on the list
 		String[] values = new String[] { "Talk & Listen",
-				"Classification using Visualizer", "Train", "Compare" };
+				"Classification", "Train", "Compare" };
 
 		final ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < values.length; ++i) {

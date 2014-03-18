@@ -147,13 +147,14 @@ public class Train extends Activity {
 			tv.setText("|Peaks| > 30 : " + dummy + " Counter : "+counter);
 			if (dummy >= 2 && train == false) {
 				counter++;
-				if (counter > 1)
+				if (counter > 0)
 					train = true;
 				for (int i = 0; i < toTransform[0].length; i++) {
-					if (toTransform[0][i] > 3) {
-						if (list[i] == 0)
-							list[i] = 1;
+					if (toTransform[0][i] > 10) {
+						list[i]=1;
 					}
+					else
+						list[i]=0;
 				}
 				str = new StringBuilder();
 				for (int i = 0; i < list.length; i++) {
