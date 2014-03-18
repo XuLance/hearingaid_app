@@ -8,3 +8,5 @@ The audio used for testing the app are :
 Police Siren - http://www.youtube.com/watch?v=1G9mNBUymP8
 
 Fire Alarm - http://www.youtube.com/watch?v=mtGhuDvldBg
+
+Currently, it is does NOT use any machine learning concepts. It is a simplistic solution of classifying sounds based on known frequency bands.
